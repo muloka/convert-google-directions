@@ -1,0 +1,29 @@
+{
+  "name": "ConvertGoogleDirections",
+  "version": "1.0.0",
+  "description": "Convert Google directions URL to a given output format.",
+  "main": "index.js",
+  "bin": {
+    "convert-google-directions": "./bin/convert-google-directions"
+  },
+  "dependencies": {
+    "@google/maps": "^0.4.2",
+    "@mapbox/polyline": "^0.2.0",
+    "commander": "^2.11.0",
+    "geojson": "^0.4.1",
+    "togpx": "^0.5.4",
+    "tokml": "^0.4.0",
+    "topojson": "^3.0.0"
+  },
+  "keywords": [
+    "maps",
+    "google",
+    "directions",
+    "gpx",
+    "kml",
+    "geojson",
+    "topojson"
+  ],
+  "author": "Louis Galipeau",
+  "license": "ISC"
+}
