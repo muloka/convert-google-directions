@@ -27,7 +27,7 @@ function GetMapsObject(googleMapsURL) {
 
   // extract way points from url data parameter
   const parts = urlObjectArray[6].split('=')[1].split('!');
-  const indexes = parts.map((e, i) => e === "2m2" ? i : '').filter(String);
+  const indexes = parts.map((e, i) => (e === "2m2" || e === "1m2") ? i : '').filter(String);
 
   for(let index of indexes) {
     googleMapsObject.waypoints.push([
