@@ -1,5 +1,5 @@
 {
-  "name": "ConvertGoogleDirections",
+  "name": "convert-google-directions",
   "version": "1.0.0",
   "description": "Convert Google directions URL to a given output format.",
   "main": "index.js",
