@@ -24,6 +24,15 @@
     "geojson",
     "topojson"
   ],
+  "bugs" : {
+    "url" : "https://github.com/muloka/convert-google-directions/issues"
+  },
+  "preferGlobal": true,
+  "repository" : { 
+    "type" : "git",
+    "url" : "https://github.com/muloka/convert-google-directions.git"
+  },
+  "homepage": "https://github.com/muloka/convert-google-directions",
   "author": "Louis Galipeau",
   "license": "ISC"
 }
