@@ -7,14 +7,12 @@ const topojson = require('topojson');
 const util = require('util');
 const { URL } = require('url');
 
-const GOOGLE_MAPS_API_KEY = require('./config').GOOGLE_MAPS_API_KEY;
-
 function GetMapsObject(googleMapsURL) {
   function convertDataPoint(dataPoint) {
     if (typeof dataPoint == "string") {
       return dataPoint;
     } 
-    return dataPoint.split(',').map((s) => parseFloat(s));
+    return dataPoint.split(',').map(parseFloat);
   }
 
   const urlObject = new URL(googleMapsURL);
@@ -27,15 +25,7 @@ function GetMapsObject(googleMapsURL) {
     waypoints: []
   };
 
-  /**
-   * Code to parse the values in the "data" attribute in a Google Maps URL to an Array
-   *
-   * Based on information from:
-   *  http://stackoverflow.com/a/34275131
-   *  http://stackoverflow.com/a/24662610
-   *  https://stackoverflow.com/a/31854423
-   *  https://gist.github.com/jeteon/e71fa21c1feb48fe4b5eeec045229a0c
-   */
+  // extract way points from url data parameter
   const parts = urlObjectArray[6].split('=')[1].split('!');
   const indexes = parts.map((e, i) => e === "2m2" ? i : '').filter(String);
 
@@ -52,7 +42,7 @@ function GetMapsObject(googleMapsURL) {
 async function GetDirections(directionRoute) {
   const googleMapsClient = maps.createClient({
     Promise: global.Promise,
-    key: GOOGLE_MAPS_API_KEY
+    key: process.env.GOOGLE_MAPS_API_KEY
   });
 
   return googleMapsClient.directions(directionRoute).asPromise();
