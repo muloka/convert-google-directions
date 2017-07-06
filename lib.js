@@ -7,14 +7,16 @@ const topojson = require('topojson');
 const util = require('util');
 const { URL } = require('url');
 
-function GetMapsObject(googleMapsURL) {
-  function convertDataPoint(dataPoint) {
-    if (typeof dataPoint == "string") {
-      return dataPoint;
-    } 
-    return dataPoint.split(',').map(parseFloat);
-  }
+// private
+function convertDataPoint(dataPoint) {
+  if (typeof dataPoint == "string") {
+    return dataPoint;
+  } 
+  return dataPoint.split(',').map(parseFloat);
+}
 
+// public
+function GetMapsObject(googleMapsURL) {
   const urlObject = new URL(googleMapsURL);
 
   const urlObjectArray = urlObject.pathname.split('/')
