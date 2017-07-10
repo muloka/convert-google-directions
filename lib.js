@@ -15,33 +15,7 @@ function convertDataPoint(dataPoint) {
   return dataPoint.split(',').map(parseFloat);
 }
 
-// public
-function GetMapsObject(googleMapsURL) {
-  const urlObject = new URL(googleMapsURL);
-
-  const urlObjectArray = urlObject.pathname.split('/')
-
-  const googleMapsObject = {
-    origin: convertDataPoint(urlObjectArray[3]),
-    destination: convertDataPoint(urlObjectArray[4]),
-    waypoints: []
-  };
-
-  // extract way points from url data parameter
-  const parts = urlObjectArray[6].split('=')[1].split('!');
-  const indexes = parts.map((e, i) => (e === "2m2" || e === "1m2") ? i : '').filter(String);
-
-  for(let index of indexes) {
-    googleMapsObject.waypoints.push([
-      parseFloat(parts[index+2].split('d')[1]),
-      parseFloat(parts[index+1].split('d')[1])
-    ]);
-  }
-
-  return googleMapsObject;
-}
-
-function ConvertDirections(directionsObject, toFormat) {
+function convertDirections(directionsObject, toFormat) {
   const normalizedPoints = [];
   const decodedPoints = polyline.decode(directionsObject.json.routes[0].overview_polyline.points);
 
@@ -70,6 +44,32 @@ function ConvertDirections(directionsObject, toFormat) {
   process.exit(0); 
 }
 
+// public
+function GetMapsObject(googleMapsURL) {
+  const urlObject = new URL(googleMapsURL);
+
+  const urlObjectArray = urlObject.pathname.split('/')
+
+  const googleMapsObject = {
+    origin: convertDataPoint(urlObjectArray[3]),
+    destination: convertDataPoint(urlObjectArray[4]),
+    waypoints: []
+  };
+
+  // extract way points from url data parameter
+  const parts = urlObjectArray[6].split('=')[1].split('!');
+  const indexes = parts.map((e, i) => (e === "2m2" || e === "1m2") ? i : '').filter(String);
+
+  for(let index of indexes) {
+    googleMapsObject.waypoints.push([
+      parseFloat(parts[index+2].split('d')[1]),
+      parseFloat(parts[index+1].split('d')[1])
+    ]);
+  }
+
+  return googleMapsObject;
+}
+
 function GetDirections(directionRoute, toFormat) {
   const googleMapsClient = maps.createClient({
     Promise: global.Promise,
@@ -79,7 +79,7 @@ function GetDirections(directionRoute, toFormat) {
   googleMapsClient.directions(directionRoute)
     .asPromise()
     .then(response => {
-      ConvertDirections(response, toFormat)
+      convertDirections(response, toFormat)
     })
     .catch((err) => {
       console.error('Error: Unable to parse URL and generate output');

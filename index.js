@@ -2,7 +2,7 @@ const program = require('commander');
 const { GetMapsObject, GetDirections } = require('./lib');
 
 program
-  .version('1.0.3')
+  .version('1.0.4')
   .description('Convert Google directions URL to a given output format')
   .usage('[options] <GoogleMapsDirectionsURL ...>')
   .option(

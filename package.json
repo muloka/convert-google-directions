@@ -1,6 +1,6 @@
 {
   "name": "convert-google-directions",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Convert Google Maps directions URL to a given output format",
   "main": "index.js",
   "bin": {
