@@ -41,15 +41,6 @@ function GetMapsObject(googleMapsURL) {
   return googleMapsObject;
 }
 
-async function GetDirections(directionRoute) {
-  const googleMapsClient = maps.createClient({
-    Promise: global.Promise,
-    key: process.env.GOOGLE_MAPS_API_KEY
-  });
-
-  return googleMapsClient.directions(directionRoute).asPromise();
-}
-
 function ConvertDirections(directionsObject, toFormat) {
   const normalizedPoints = [];
   const decodedPoints = polyline.decode(directionsObject.json.routes[0].overview_polyline.points);
@@ -79,4 +70,21 @@ function ConvertDirections(directionsObject, toFormat) {
   process.exit(0); 
 }
 
-module.exports = { GetMapsObject, GetDirections, ConvertDirections };
+function GetDirections(directionRoute, toFormat) {
+  const googleMapsClient = maps.createClient({
+    Promise: global.Promise,
+    key: process.env.GOOGLE_MAPS_API_KEY
+  });
+
+  googleMapsClient.directions(directionRoute)
+    .asPromise()
+    .then(response => {
+      ConvertDirections(response, toFormat)
+    })
+    .catch((err) => {
+      console.error('Error: Unable to parse URL and generate output');
+      process.exit(0);
+    });
+}
+
+module.exports = { GetMapsObject, GetDirections };

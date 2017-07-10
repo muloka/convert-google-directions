@@ -1,8 +1,8 @@
 const program = require('commander');
-const { GetMapsObject, GetDirections, ConvertDirections } = require('./lib');
+const { GetMapsObject, GetDirections } = require('./lib');
 
 program
-  .version('1.0.2')
+  .version('1.0.3')
   .description('Convert Google directions URL to a given output format')
   .usage('[options] <GoogleMapsDirectionsURL ...>')
   .option(
@@ -29,9 +29,5 @@ if (process.env.GOOGLE_MAPS_API_KEY === undefined) {
   process.exit(0);
 }
 
-GetDirections(GetMapsObject(program.args[0]))
-  .then(response => ConvertDirections(response, program.format))
-  .catch((err) => {
-    console.error('Error: Unable to parse URL and generate output');
-    process.exit(0);
-  });
+// if args then execute main program
+if (program.args.length) GetDirections(GetMapsObject(program.args[0]), program.format);
